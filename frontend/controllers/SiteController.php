@@ -24,7 +24,8 @@ class SiteController extends Controller
    
     public function behaviors()
     {
-        $this->layout = "miLayout";
+        $this->layout = "vcLayout";  //layout vacío para rederizar luego 
+        
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -74,7 +75,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        //En función de quién llama mostramos su plantilla correspondiente.
+        
+        $a_url = explode("/", Yii::$app->urlManager->baseUrl);
+        $site  = $a_url[count($a_url)-1];
+        
+        return $this->render('layouts/'.$site.'/'.$site.'.tpl', ['name' => 'Alex','address' => 'Addfdlex',]);
+       // return $this->render('index');
+    }
+    
+    public function actionTest()
+    {
+        echo "estas en el contralador test"; exit;
     }
 
     /**
